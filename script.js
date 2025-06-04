@@ -9,8 +9,25 @@ const loadReviews = ()=>{
     
 }
 
-const handleReviewSubmit = () =>{
-    console.log("miib")
+const handleReviewSubmit = (e) =>{
+    e.preventDefault()
+    const bookTitle = document.getElementById('book-title').value
+    const bookReview = document.getElementById('review-text').value
+    const bookRating = document.getElementById('rating').value
+
+    console.log(bookTitle)
+    let review = {
+        title:bookTitle,
+        rating:bookRating,
+        reviewText:bookReview,
+        likes: 0 ,
+        reposts: 0
+    }
+
+    const newReview = createReviewElement(review)
+    const list = document.querySelector('#reviews-list')
+    list.insertBefore(newReview, list.firstChild)
+    e.target.reset()
 }
 
 const createReviewElement = (review) =>{
@@ -20,8 +37,8 @@ const createReviewElement = (review) =>{
     <p>${review.title}</p>
     <p>${review.reviewText}</p>
     <p>${review.rating}</p>
-    <button>Likes (5)</button>
-    <button>Reposts(5)</button>
+    <button>Likes ${review.likes}</button>
+    <button>Reposts${review.reposts}</button>
     `
 console.log(reviewElememnt)
     return reviewElememnt
@@ -31,5 +48,6 @@ console.log(reviewElememnt)
 
 document.addEventListener("DOMContentLoaded", () =>{
     loadReviews();
-    document.addEventListener("submit", () =>{})
+    const reviewForm = document.querySelector('#review-form')
+    reviewForm.addEventListener("submit", (handleReviewSubmit))
 })
